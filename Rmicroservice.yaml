@@ -1,0 +1,128 @@
+swagger: "2.0"
+info:
+  description: "This is the API description for the generation of reports microservice in Ruteame "
+  version: "1.0.0"
+  title: "Reports Microservice"
+  contact:
+    email: "nisanchezva@unal.edu.co"
+basePath: "/api"   
+tags:
+- name: "Report"
+  description: "Reports"
+- name: "Route"
+  description: "it's the connection between Stations"
+- name: "Station"
+  description: "stations have the data about time to generate a report"
+paths:
+  /report:
+    get:
+      tags:
+      - "report"
+      summary: "Gets all the reports"
+      operationId: "GetReports"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "Ok"
+          
+    post:
+      tags:
+      - "report"
+      summary: "Post one report"
+      operationId: "PostReport"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Report object that needs ot be added"
+        required: true
+        schema:
+          $ref: "#/definitions/Report"
+      responses:
+        "201":
+          description: "created"
+        "404":
+            description: 'Route not found'
+            
+  /report/{id}:
+    get:
+      tags:
+      - "Report"
+      summary: "Find report by ID"
+      description: "Returns a single report"
+      operationId: "GetReportById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of report to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Report"
+        "404":
+          description: "Pet not found"
+    delete:
+      tags:
+      - "Report"
+      summary: "Deletes a report"
+      operationId: "DeleteReport"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "report id to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+        "404":
+          description: "Pet not found"
+  
+definitions:
+  Report:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      RouteId:
+        type: "integer"
+        format: "int64"
+      Date:
+        type: "string"
+      Duration:
+        type: "integer"
+      type:
+        type: "boolean"
+        description: "type of report"
+  Route:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+  Station:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      RouteId:
+        type: "integer"
+        format: "int64"
+      Arrival:
+        type: "string"
+      Departure:
+        type: "string"
+  

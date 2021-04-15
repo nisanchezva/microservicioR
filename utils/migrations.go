@@ -13,9 +13,9 @@ func MigrateDB() {
 	defer db.Close()
 	fmt.Println("Migrating models....")
 	//Elimino las tablas anteriores si ya estaban
-	db.DropTableIfExists(&models.Route{}, &models.Station{}, &models.Report{})
+	db.DropTableIfExists(&models.Route{}, &models.Station{})
 	// Automigrate se encarga de migrar la base de datos sí no se ha migrado, y lo hace a partir del modelo
-	db.AutoMigrate(&models.Route{}, &models.Station{}, &models.Report{})
+	db.AutoMigrate(&models.Route{}, &models.Station{})
 
 	//Agregando datos
 	//Con solo agregar el de ruta, grom agrega los datos de estación, así se mantiene la integridad, pero si llegara a ocurrir un error, alguna id deberia estar en 0
